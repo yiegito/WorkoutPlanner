@@ -111,8 +111,9 @@ router.patch('/:_id', async (req, res) => {
 
         const filter = {_id: new ObjectId(id)};
 
-        const {title, load, sets, reps, timestamp} = body;
-        timestamp = new Date();
+        const {title, load, sets, reps} = body;
+        const timestamp = new Date();
+        const total = sets * reps;
 
         const update = {
             $set:{
@@ -120,6 +121,7 @@ router.patch('/:_id', async (req, res) => {
                 load: load,
                 sets: sets,
                 reps: reps,
+                total: total,
                 timestamp: timestamp
             }
         }
