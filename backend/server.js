@@ -1,10 +1,11 @@
+require('dotenv').config()
 const express = require('express')
 
 // require in out database functionality
 const mongo = require('./db')
 // express app
 const app = express()
-const port = 4000
+const port = process.env.PORT
 
 // middleware
 app.use(express.json())
