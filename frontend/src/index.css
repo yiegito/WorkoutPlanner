@@ -10,10 +10,18 @@ body{
   background: #f1f1f1;
   margin:0;
   font-family: "Poppins";
+  background-color: #555;
 
 }
 header{
-  background: #fff;
+  background: #303030;
+  
+}
+header .container h1{
+  color: #ddd;
+}
+header .container h3{
+  color: #ddd;
 }
 header .container{
   max-width:1400px;
@@ -77,6 +85,9 @@ header a{
   color: #333;
 }
 /* new workout form */
+.create h3, .create label{
+  color:#ddd;
+}
 label, input{
   display: block;
 }
@@ -96,6 +107,7 @@ form button{
   padding: 10px;
   border-radius: 4px;
   cursor: pointer;
+  display: flex;
 }
 div.error{
   padding:10px;
@@ -123,4 +135,9 @@ h2{
 }
 #groupSelect{
   margin-bottom: 25px;
+}
+.selectSort{
+  color: #ddd;
+  display:inline;
+  margin-right: 0.5em;
 }

@@ -15,6 +15,7 @@ export const SelectBox = ({selectedGroup, handleSelectChange}) =>{
       };
     return (
         <>
+          <p className="selectSort">sort by group:</p>
           <select value={selectedGroup} onChange={handleChange}>
             {selection.map((selections) => (
               <option key={selections.id} value={selections.group}>
