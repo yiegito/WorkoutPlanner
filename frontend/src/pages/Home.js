@@ -6,6 +6,7 @@ import WorkoutDetails from "../components/WorkoutDetails"
 import WorkoutsForm from "../components/WorkoutForm"
 import SearchBar from "../components/SearchBar"
 import { SelectBox } from "../components/SelectBox"
+// import is from "date-fns/esm/locale/is/index.js"
 
 
 const Home = () => {
@@ -24,14 +25,18 @@ const Home = () => {
 
     fetchWorkouts()
   }, [dispatch])
-  const filteredWorkouts = searchQuery
-  ? workouts.filter((workout) =>
-      workout.title.toLowerCase().includes(searchQuery.toLowerCase())
-    )
-  : selectedGroup !== 'All Workouts'
-  ? workouts.filter((workout) => workout.group === selectedGroup)
-  : workouts;
 
+
+    const filteredWorkouts = workouts.filter((workout) =>{
+      const isMatchingGroup =
+        selectedGroup === 'All Workouts' || workout.group === selectedGroup;
+
+      const isMatchingName = 
+        !searchQuery ||
+        (workout.title && workout.title.toLowerCase().includes(searchQuery.toLowerCase()));
+
+      return isMatchingGroup && isMatchingName;
+    });
 
   return (
     <div className="home">
