@@ -1,6 +1,6 @@
 require('dotenv').config()
 const express = require('express')
-
+const mongoose = require('mongoose')
 // require in out database functionality
 const mongo = require('./db')
 // express app
@@ -19,10 +19,21 @@ app.use((req, res, next) =>{
 const workoutRoutes = require('./routes/workouts.js')
 app.use('/workouts',workoutRoutes)
 
+const userRoutes= require('./routes/user.js')
+app.use('/user', userRoutes)
+
 // listen for requests
-app.listen(port, async () => {
-    console.log('listening on port', port)
-    await mongo.connect();
-})
+mongoose.connect(process.env.URL)
+    .then(()=>{
+        app.listen(port, async () => {
+            console.log('connected to db\nlistening on port', port)
+            await mongo.connect()
+            
+        })
+    })
+    .catch((error) =>{
+        console.log(error)
+    })
+
 
 // npx nodemon server.js to run nodemon or npm run dev from scripts in package.json

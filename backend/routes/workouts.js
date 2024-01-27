@@ -1,12 +1,16 @@
 const router = require('express').Router();
 const { ObjectId } = require('mongodb');
 const database = require('../db');
+const requireAuth = require('../middleware/requireAuth')
 
+//require auth for all workouts
+router.use(requireAuth)
 // to get all workouts
 router.get('/', async (req, res) => {
+    const user_id = req.user._id
     try {
         const db = req.db;
-        const workouts = await db.collection('Workouts').find().toArray();
+        const workouts = await db.collection('Workouts').find({user_id}).toArray();
         res.json(workouts);
     } catch (error) {
         console.error(error);
@@ -53,6 +57,7 @@ router.post('/', async (req, res) => {
     try {
         const { title, sets, reps, load, group } = req.body;
         const db = req.db;
+        const user_id = req.user._id
 
         const timestamp = new Date();
         const total = sets * reps;
@@ -63,7 +68,8 @@ router.post('/', async (req, res) => {
             total,
             load,
             group,
-            timestamp
+            timestamp,
+            user_id
         };
 
         const result = await db.collection('Workouts').insertOne(workout);
