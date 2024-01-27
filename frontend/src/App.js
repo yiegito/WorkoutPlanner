@@ -8,7 +8,14 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 
 import Navbar from './components/Navbar'
+import { useEffect, useState } from 'react';
 function App() {
+  const [message, setMessage] = useState("");
+  useEffect(() =>{
+    fetch("https://workoutplanner-live.onrender.com")
+      .then((res) => res.json())
+      .then((data) => setMessage(data.message))
+  },[])
   const { user } = useAuthContext()
 
   return (
