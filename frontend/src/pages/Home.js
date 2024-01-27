@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { useWorkoutsContext } from "../hooks/useWorkoutsContext"
+import { useAuthContext } from '../hooks/useAuthContext'
 
 // components
 import WorkoutDetails from "../components/WorkoutDetails"
@@ -12,10 +13,15 @@ import { SelectBox } from "../components/SelectBox"
 const Home = () => {
   const { workouts, dispatch, searchQuery } = useWorkoutsContext()
   const [selectedGroup, setSelectedGroup] = useState('All Workouts');
+  const {user} = useAuthContext()
 
   useEffect(() => {
     const fetchWorkouts = async () => {
-      const response = await fetch('/workouts')
+      const response = await fetch('/workouts',{
+        headers:{
+          'Authorization': `Bearer ${user.token}`
+        }
+      })
       const json = await response.json()
 
       if (response.ok) {
@@ -23,8 +29,13 @@ const Home = () => {
       }
     }
 
-    fetchWorkouts()
-  }, [dispatch])
+    if(user){
+      fetchWorkouts()
+    }
+  }, [dispatch, user])
+    if (!workouts) {
+      return null; // or return a loading indicator, error message, etc.
+    }
 
 
     const filteredWorkouts = workouts.filter((workout) =>{
@@ -44,7 +55,7 @@ const Home = () => {
       <SearchBar />
       <SelectBox selectedGroup={selectedGroup} handleSelectChange={setSelectedGroup} />
 
-      {filteredWorkouts === null || filteredWorkouts.length===0 ? (
+      {filteredWorkouts.length === null || filteredWorkouts.length===0 ? (
         <p>No workouts found.</p>
       ) : (
         filteredWorkouts.map((workout) => (
