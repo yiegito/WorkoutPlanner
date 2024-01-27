@@ -20,7 +20,7 @@ function App() {
 
   return (
     <div className="App">
-    <BrowserRouter basename="/workoutplanner-live.onrender">
+    <BrowserRouter basename="https://workoutplanner-live.onrender.com">
     <Navbar/>
       <div className="pages">
         <Routes>
