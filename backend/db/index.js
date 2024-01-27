@@ -1,10 +1,11 @@
 const { MongoClient } = require('mongodb');
+require('dotenv').config()
 
-const config = require('../config.json');
+// const config = require('../config.json');
 
 
 const mongo = () => {
-    const mongoURL = `mongodb+srv://${config.username}:${config.password}@mernapp.wizglqk.mongodb.net/?retryWrites=true&w=majority`;
+    const mongoURL = process.env.URL;
     let db = null;
 
     /**
