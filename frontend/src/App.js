@@ -20,12 +20,12 @@ function App() {
 
   return (
     <div className="App">
-    <BrowserRouter basename="https://workoutplanner-live.onrender.com">
+    <BrowserRouter>
     <Navbar/>
       <div className="pages">
         <Routes>
           <Route
-            path="/"
+            path="https://workoutplanner-live.onrender.com/"
             element={user ? <Home/> : <Navigate to="/login/"/>}
           />
           <Route
